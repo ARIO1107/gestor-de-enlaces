@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MI GESTOR DE  ENLACES</title>
+    <link rel="stylesheet" href="styles.css">
+   
+</head>
+<body>
+    <!-- Contenedor principal para organizar la aplicacion -->
+     <main class = "container" >
+
+        <!-- cabecera de la app -->
+        <header>  
+            <h1>📌 Mis Recursos Y enlaces </h1>
+            <p>Guarda tus paginas favoritas para estudiar y trabajar.</p>
+        </header>
+
+        <!--formulario para ingresar nuevos enlaces-->
+        <section class = "form-section">  
+            <form id = "link-form">
+                <div class="input-group">
+                    <label for = "title-input"> Titulo del enlace :</label>
+                    <input type="text" id="title-input" placeholder="Ej. Documentacion en python" required>
+                </div>
+                <div class="input-group" >
+                    <label for="url-input">Direccion URL : </label>
+                    <input type="url" id="url-input" placeholder="Ej. https://www.python.org/doc/" required> 
+                </div> 
+                <button type="submit" id="add-btn" > Guardar Enlace</button>
+            </form>
+        </section>
+
+        <!--Lista donde se mostraran los enlaces gusradados-->
+        <section class="link-section" >
+            <h2> Mis Enlaces Guardados</h2>
+            <ul id="links-list">
+                <!-- enlace de prueba estatico-->
+                 <li class="link-card">
+                    <a href="https://developer.mozilla.org" target="_blank">MDN web Docs</a>
+                    <p>Documentación oficial de desarrollo web</p>
+                 </li>
+            </ul>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
