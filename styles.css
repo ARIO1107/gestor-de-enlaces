@@ -148,3 +148,34 @@ button#add-btn:hover {
     font-size : 0.8rem;
     transition : background-color  0.3s ;
 }
+
+/* Oculta el formulario y botones cuando NO estamos en modo admin */
+body:not(.admin-mode) .form-section,
+body:not(.admin-mode) .delete-btn {
+    display: none !important;
+}
+
+/* Estilo del botón de alternancia */
+.toggle-btn {
+    margin-top: 12px;
+    background-color: var(--border-color);
+    color: var(--text-color);
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.link-content {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.link-favicon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    object-fit: cover;
+}

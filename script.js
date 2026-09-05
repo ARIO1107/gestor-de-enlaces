@@ -5,22 +5,49 @@ const linksList = document.getElementById('links-list');
 
 let links = JSON.parse(localStorage.getItem('my_links')) || [];
 
+// Variable para controlar si el modo admin está activo
+let isAdmin = false;
+
+const adminToggleBtn = document.getElementById('admin-toggle-btn');
+
+// Escuchar click en el botón de Admin
+adminToggleBtn.addEventListener('click', () => {
+    isAdmin = !isAdmin; // Alterna entre true y false
+    document.body.classList.toggle('admin-mode', isAdmin);
+    adminToggleBtn.textContent = isAdmin ? '🔓 Modo Público' : '🔒 Modo Admin';
+});
+
+// Función de renderizado actualizada con Favicons estilo Linktree
 function renderLinks() {
     linksList.innerHTML = '';
-    links.forEach( (link , index ) => { 
+
+    links.forEach((link, index) => {
         const li = document.createElement('li');
         li.className = 'link-card';
+
+        // Extrae el dominio de la URL para obtener su logo automáticamente
+        let domain = '';
+        try {
+            domain = new URL(link.url).hostname;
+        } catch (e) {
+            domain = link.url;
+        }
+
+        const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+
         li.innerHTML = `
-            <div>
-                <!-- Enlace que se abrira en una pestaña nueva gracias a target = "_blank"-->
-                <a href = "${link.url}" target = "_blank">${link.title}</a>
-                <p>${link.url}</p>
+            <div class="link-content">
+                <img src="${faviconUrl}" alt="${link.title}" class="link-favicon" onerror="this.src='https://via.placeholder.com/32'">
+                <div class="link-info">
+                    <a href="${link.url}" target="_blank" class="link-title">${link.title}</a>
+                    <span class="link-url">${link.url}</span>
+                </div>
             </div>
-            <!--botom de eliminar q llama a la funcion deletelink() pasandole la posicion de el link (index)-->
-            <button class = "delete-btn" onclick = "deleteLink(${index})">🗑️ Eliminar</button> 
+            <button class="delete-btn" onclick="deleteLink(${index})" title="Eliminar enlace">🗑️ Eliminar</button>
         `;
+
         linksList.appendChild(li);
-    })
+    });
 }
 
 linkForm.addEventListener('submit', function(event){
