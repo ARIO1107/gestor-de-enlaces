@@ -62,10 +62,42 @@ linkForm.addEventListener('submit', function(event){
     linkForm.reset();   
 })
 
+async function cargarFraseDelDia() {
+    const contenedorFrase = document.getElementById('frase-motivacional');
+    if (!contenedorFrase) return;
+
+    try {
+        // 1. Pedimos la frase en inglés
+        const resFrase = await fetch('https://dummyjson.com/quotes/random');
+        const dataFrase = await resFrase.json();
+
+        // 2. Enviamos la frase a la API de traducción (Inglés -> Español)
+        const urlTraduccion = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(dataFrase.quote)}&langpair=en|es`;
+        const resTraduccion = await fetch(urlTraduccion);
+        const dataTraduccion = await resTraduccion.json();
+
+        // Texto traducido al español
+        const fraseEnEspanol = dataTraduccion.responseData.translatedText;
+
+        // 3. Mostramos la frase ya traducida
+        contenedorFrase.innerHTML = `"${fraseEnEspanol}" <br> <small>— ${dataFrase.author}</small>`;
+
+    } catch (error) {
+        console.error("Error al obtener/traducir la frase:", error);
+        contenedorFrase.innerHTML = `"El único modo de hacer un gran trabajo es amar lo que haces." <br> <small>— Steve Jobs</small>`;
+    }
+}
+
+cargarFraseDelDia();
+
+// Ejecutamos la función al cargar la página
+cargarFraseDelDia();
+
 function deleteLink(index) {
     links.splice(index, 1);
     localStorage.setItem('my_links', JSON.stringify(links));
     renderLinks();
 }
 
+cargarFraseDelDia();
 renderLinks();
